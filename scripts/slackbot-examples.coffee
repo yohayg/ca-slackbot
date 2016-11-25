@@ -32,6 +32,9 @@ module.exports = (robot) ->
     # responds in the current channel
     msg.send 'zzz...'
 
+  robot.respond /users/i, (msg) ->
+# responds in the current channel
+    msg.send '10k'
   ###
   # demo of brain functionality (persisting data)
   # https://github.com/github/hubot/blob/master/docs/scripting.md#persistence
