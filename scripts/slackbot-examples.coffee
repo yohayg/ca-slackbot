@@ -11,6 +11,8 @@
 # Author:
 #   Michi Kono
 #
+CA_Admin = require './ca_admin'
+
 module.exports = (robot) ->
   # helper method to get sender of the message
   get_username = (response) ->
@@ -31,6 +33,16 @@ module.exports = (robot) ->
   robot.respond /sleep it off/i, (msg) ->
     # responds in the current channel
     msg.send 'zzz...'
+
+  robot.respond /status/i, (msg) ->
+
+    ca_admin = new CA_Admin()
+    ca_admin.status().then ((res) ->
+      response = JSON.parse(res)
+      msg.send "Total users: #{response.all.users}"
+
+    )
+
 
   robot.respond /users/i, (msg) ->
 # responds in the current channel
