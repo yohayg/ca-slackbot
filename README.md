@@ -1,13 +1,12 @@
-# Slackbot Tutorial Bot
+# CloudAdvice Slackbot
 
-This tutorial is geared toward writing a Slack hubot instance. It includes demos and examples that work in hubot + slack (but could work with another adapter).
+This tutorial is based on https://github.com/michikono/slackbot-tutorial
 
 ### Overview
 
-* An accompanying blog post can be found here: http://www.michikono.com/2015/07/10/in-depth-tutorial-on-writing-a-slackbot/
-* This project contains a more thorough set of example scripts in [slackbot-examples.coffee](https://github.com/michikono/slackbot-tutorial/blob/master/scripts/slackbot-examples.coffee). 
+CloudAdvice Admin statistics slack bot
 
-### Running tutorial Locally
+### Running ca-slackbot Locally
 
 You can test your hubot by running the following.
 
@@ -37,6 +36,7 @@ You can test out custom commands by typing them in as if you were in a chat room
 
     hubot> hubot sleep it off
     hubot> zzz...
+    hubot> hubot status
 
 ### Steps to recreate this bot ###
  
@@ -70,10 +70,7 @@ Start redis:
 
     redis-server
 
-### Scripting
 
-An example script is included at [`scripts/slackbot-examples.coffee`](https://github.com/michikono/slackbot-tutorial/blob/master/scripts/slackbot-examples.coffee), so check it out to
-get started, along with the [Scripting Guide](https://github.com/github/hubot/blob/master/docs/scripting.md).
 
 
 ### hubot-scripts
