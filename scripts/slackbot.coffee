@@ -38,7 +38,7 @@ module.exports = (robot) ->
     msg.http('https://www.cloudadvisor.com/api/bot').get() (err,res,body)->
       try
         status = JSON.parse(body)
-        result = """"
+        result = """
           Cloud Advice Status
           Total
             users: #{status.all.users}
