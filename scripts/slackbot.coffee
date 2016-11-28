@@ -6,12 +6,11 @@
 #   bug me - secret surprise
 #
 # Notes:
-#   https://github.com/github/hubot/blob/master/docs/scripting.md#documenting-scripts
+#   Copied from https://github.com/github/hubot/blob/master/docs/scripting.md#documenting-scripts
 #
 # Author:
-#   Michi Kono
+#   Yohay Golan
 #
-CA_Admin = require './ca_admin'
 
 module.exports = (robot) ->
   # helper method to get sender of the message
@@ -36,17 +35,39 @@ module.exports = (robot) ->
 
   robot.respond /status/i, (msg) ->
 
-    ca_admin = new CA_Admin()
-    ca_admin.status().then ((res) ->
-      response = JSON.parse(res)
-      msg.send "Total users: #{response.all.users}"
+    msg.http('http://www.cloudadvice.dev:3000/api/bot').get() (err,res,body)->
+      try
+        status = JSON.parse(body)
+        result = """"
+          Cloud Advice Status
+          Total
+            users: #{status.all.users}
+            invites: #{status.all.invites}
+            topics: #{status.all.topic}
+            comments: #{status.all.comments}
 
-    )
+          Total
+            users: #{status.month.users}
+            invites: #{status.month.invites}
+            topics: #{status.month.topic}
+            comments: #{status.month.comments}
 
+          Total
+            users: #{status.week.users}
+            invites: #{status.week.invites}
+            topics: #{status.week.topic}
+            comments: #{status.week.comments}
 
-  robot.respond /users/i, (msg) ->
-# responds in the current channel
-    msg.send '10k'
+          Total
+            users: #{status.today.users}
+            invites: #{status.today.invites}
+            topics: #{status.today.topic}
+            comments: #{status.today.comments}
+          """
+        msg.send result
+      catch error
+        msg.send 'Could not get status from CloudAdvice'
+
   ###
   # demo of brain functionality (persisting data)
   # https://github.com/github/hubot/blob/master/docs/scripting.md#persistence
@@ -127,10 +148,10 @@ module.exports = (robot) ->
   # Demonstration of how to parse private messages
   ###
   # responds to all private messages with a mean remark
-  robot.hear /./i, (msg) ->
-    # you can chain if clauses on the end of a statement in coffeescript to make things look cleaner
-    # in a direct message, the channel name and author are the same
-    msg.send 'shoo!' if get_channel(msg) == get_username(msg)
+#  robot.hear /./i, (msg) ->
+#    # you can chain if clauses on the end of a statement in coffeescript to make things look cleaner
+#    # in a direct message, the channel name and author are the same
+#    msg.send 'shoo!' if get_channel(msg) == get_username(msg)
 
   # any message above not yet processed falls here. See the console to examine the object
   # uncomment to test this
