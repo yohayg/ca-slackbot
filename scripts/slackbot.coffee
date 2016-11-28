@@ -35,7 +35,7 @@ module.exports = (robot) ->
 
   robot.respond /status/i, (msg) ->
 
-    msg.http('http://www.cloudadvice.dev:3000/api/bot').get() (err,res,body)->
+    msg.http('https://www.cloudadvisor.com/api/bot').get() (err,res,body)->
       try
         status = JSON.parse(body)
         result = """"
