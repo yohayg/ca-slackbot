@@ -33,7 +33,7 @@ module.exports = (robot) ->
     # responds in the current channel
     msg.send 'zzz...'
 
-  robot.respond /status/i, (msg) ->
+  robot.respond /status total/i, (msg) ->
 
     msg.http('https://www.cloudadvisor.com/api/bot').get() (err,res,body)->
       try
@@ -46,23 +46,41 @@ module.exports = (robot) ->
             topics: #{status.all.topic}
             comments: #{status.all.comments}
 
-          Total
+          Total this week
             users: #{status.month.users}
             invites: #{status.month.invites}
             topics: #{status.month.topic}
             comments: #{status.month.comments}
 
-          Total
+          Total this week
             users: #{status.week.users}
             invites: #{status.week.invites}
             topics: #{status.week.topic}
             comments: #{status.week.comments}
 
-          Total
+          Total today
             users: #{status.today.users}
             invites: #{status.today.invites}
             topics: #{status.today.topic}
             comments: #{status.today.comments}
+          """
+        msg.send result
+      catch error
+        msg.send 'Could not get status from CloudAdvice'
+  robot.respond /status users/i, (msg) ->
+    msg.http('https://www.cloudadvisor.com/api/bot').get() (err,res,body)->
+      try
+        status = JSON.parse(body)
+
+        result = """
+          Cloud Advice users status
+          Total users: #{status.all.users}
+
+          This month users: #{status.month.users}
+
+          This week users: #{status.week.users}
+
+          Todays users: #{status.today.users}
           """
         msg.send result
       catch error
